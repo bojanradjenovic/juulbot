@@ -17,4 +17,5 @@ async def on_ready():
 # bot.load_extension("calculate") fix this you fucking retard
 bot.load_extension("commands.avatar")
 bot.load_extension("commands.profile")
+bot.load_extension("commands.currency")
 bot.run('MTAwNTg2NzgxOTMyMzM3MTU3MA.Gm2Xo5.5nUxktAAtIGN2OUSRcPFQ0fOKIWuByXz6kztTo')
