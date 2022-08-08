@@ -1,4 +1,3 @@
-from datetime import datetime
 import discord
 import logging
 import requests
@@ -28,8 +27,6 @@ async def currency(ctx, amount: float, input, output):
         return
     convamount = Decimal(conversion['data']['transAmt']).quantize(cents, ROUND_HALF_UP)
     outputamount = Decimal(conversion['data']['crdhldBillAmt']).quantize(cents, ROUND_HALF_UP)
-    lastupdate = datetime.strptime(conversion['date'], '%Y-%m-%d %H:%M:%S')
-    lastupdate = lastupdate.isoformat()
     embed=discord.Embed(title=f"Currency conversion!")
     embed.description = f"{convamount} {input} --> {outputamount} {output}"
     embed.set_footer(text=f"{ctx.author.name}#{ctx.author.discriminator}", icon_url=ctx.author.avatar_url)
