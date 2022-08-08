@@ -28,7 +28,7 @@ async def currency(ctx, amount: float, input, output):
     convamount = Decimal(conversion['data']['transAmt']).quantize(cents, ROUND_HALF_UP)
     outputamount = Decimal(conversion['data']['crdhldBillAmt']).quantize(cents, ROUND_HALF_UP)
     embed=discord.Embed(title=f"Currency conversion!")
-    embed.description = f"{convamount} {input} --> {outputamount} {output}"
+    embed.description = f"{convamount} {input.upper()} --> {outputamount} {output.upper()}"
     embed.set_footer(text=f"{ctx.author.name}#{ctx.author.discriminator}", icon_url=ctx.author.avatar_url)
     embed.colour = ctx.author.colour
     await ctx.send(embed=embed)
