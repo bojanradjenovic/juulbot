@@ -33,5 +33,12 @@ async def currency(ctx, amount: float, input, output):
     embed.colour = ctx.author.colour
     await ctx.send(embed=embed)
 
+@currency.error
+async def currency_error(ctx, error):
+    embed=discord.Embed(title=f"Currency conversion!")
+    embed.description = f"Unable to convert currency! (Wrong input)"
+    embed.set_footer(text=f"{ctx.author.name}#{ctx.author.discriminator}", icon_url=ctx.author.avatar_url)
+    embed.colour = ctx.author.colour
+    await ctx.send(embed=embed)
 def setup(bot):
     bot.add_command(currency)
