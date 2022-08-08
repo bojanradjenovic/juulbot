@@ -1,9 +1,16 @@
 import discord
 from discord.ext import commands
+import logging
+logger = logging.getLogger('discord.ext')
+handler = logging.FileHandler(filename='commands.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
+logging.basicConfig(level=logging.INFO)
 @commands.command()
 async def profile(ctx, *, user: discord.User = None):
     if user == None:    
         user = ctx.author
+    logger.info(f"{ctx.author.name}#{ctx.author.discriminator} has ran '{ctx.command}' in guild '{ctx.guild}' with message '{ctx.message.content}'!\n")
     embed=discord.Embed(title=f"{user.name}‘s profile!")
     embed.set_thumbnail(url=user.avatar_url)
     embed.add_field(name="Username" ,value=f"{user.name}#{user.discriminator}", inline=False)

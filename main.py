@@ -1,10 +1,13 @@
 import discord
 import logging
 from discord.ext import commands
+logger = logging.getLogger('discord')
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 logging.basicConfig(level=logging.INFO)
 
 bot = discord.Client()
-prefix = '/'
 bot = commands.Bot(command_prefix="$")
 @bot.event
 async def on_ready():
