@@ -25,7 +25,7 @@ async def urban(ctx, *, word):
     await ctx.send(embed=embed)
 @urban.error
 async def urban_error(ctx, error):
-    embed=discord.Embed(title=f"Urban dictionary!")
+    embed=discord.Embed(title=f"Urban Dictionary!")
     embed.description = f"Unable to retrieve definition (doesn't exist or API died lol)"
     embed.set_footer(text=f"{ctx.author.name}#{ctx.author.discriminator}", icon_url=ctx.author.avatar_url)
     embed.colour = ctx.author.colour
