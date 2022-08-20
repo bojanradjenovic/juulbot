@@ -4,10 +4,6 @@ import requests
 from discord.ext import commands
 from decimal import Decimal, ROUND_HALF_UP
 logger = logging.getLogger('discord.ext')
-handler = logging.FileHandler(filename='commands.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-logger.addHandler(handler)
-logging.basicConfig(level=logging.INFO)
 cents = Decimal('0.01')
 uri = "https://www.mastercard.co.uk"
 @commands.command()
