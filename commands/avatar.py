@@ -6,6 +6,7 @@ logger = logging.getLogger('discord.ext')
 @commands.command()
 async def avatar(ctx, *, user: discord.User = None):
     logger.info(f"{ctx.author.name}#{ctx.author.discriminator} has ran '{ctx.command}' in guild '{ctx.guild}' with message '{ctx.message.content}'!\n")
+    
     if user == None:    
         user = ctx.author
     

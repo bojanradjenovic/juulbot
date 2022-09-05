@@ -7,11 +7,10 @@ logger = logging.getLogger('discord.ext')
 
 @commands.command()
 async def currency(ctx, amount: float, input, output):
+    logger.info(f"{ctx.author.name}#{ctx.author.discriminator} has ran '{ctx.command}' in guild '{ctx.guild}' with message '{ctx.message.content}'!\n")
     cents = Decimal('0.01')
     uri = "https://www.mastercard.co.uk"
     amount = Decimal(amount).quantize(cents, ROUND_HALF_UP)
-    
-    logger.info(f"{ctx.author.name}#{ctx.author.discriminator} has ran '{ctx.command}' in guild '{ctx.guild}' with message '{ctx.message.content}'!\n")
     
     def convertcurrency(amount: Decimal, input, output):
             req = f"{uri}/settlement/currencyrate/conversion-rate?fxDate=0000-00-00&transCurr={input}&crdhldBillCurr={output}&bankFee=0&transAmt={amount}"
