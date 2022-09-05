@@ -2,11 +2,14 @@ import discord
 from discord.ext import commands
 import logging
 logger = logging.getLogger('discord.ext')
+
 @commands.command()
 async def profile(ctx, *, user: discord.User = None):
+    logger.info(f"{ctx.author.name}#{ctx.author.discriminator} has ran '{ctx.command}' in guild '{ctx.guild}' with message '{ctx.message.content}'!\n")
+    
     if user == None:    
         user = ctx.author
-    logger.info(f"{ctx.author.name}#{ctx.author.discriminator} has ran '{ctx.command}' in guild '{ctx.guild}' with message '{ctx.message.content}'!\n")
+    
     embed=discord.Embed(title=f"{user.name}‘s profile!")
     embed.set_thumbnail(url=user.avatar_url)
     embed.add_field(name="Username" ,value=f"{user.name}#{user.discriminator}", inline=False)
@@ -21,6 +24,7 @@ async def profile(ctx, *, user: discord.User = None):
 async def profile_error(ctx, error):
     if isinstance(error, commands.UserNotFound):
         user = ctx.author
+        
         embed=discord.Embed(title=f"{user.name}‘s profile!")
         embed.set_thumbnail(url=user.avatar_url)
         embed.add_field(name="Username" ,value=f"{user.name}#{user.discriminator}", inline=False)
