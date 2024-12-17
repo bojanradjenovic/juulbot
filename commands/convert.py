@@ -2,17 +2,21 @@ import disnake
 from disnake.ext import commands
 import requests
 from decimal import Decimal, ROUND_HALF_UP
+import pint
+from pint import UnitRegistry
+ureg = UnitRegistry()
+Q_ = ureg.Quantity
 
 class Convert(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.slash_command()
+    @commands.slash_command(description="Perform various conversions.")
     async def convert(self, inter: disnake.ApplicationCommandInteraction):
         pass 
 
 
-    @convert.sub_command()
+    @convert.sub_command(description="Convert between currencies.")
     async def currency(
         self,
         inter: disnake.ApplicationCommandInteraction,
@@ -59,20 +63,122 @@ class Convert(commands.Cog):
         except Exception as e:
             embed = disnake.Embed(
                 title="Error",
-                description="An error occurred while fetching conversion rates. Please try again later.",
+                description=f"An error occurred while converting currencies. {str(e)}",
+                color=disnake.Color.red()
+            )
+            await inter.send(embed=embed)
+    @convert.sub_command(description="Convert between length units.")
+    async def length(
+        self,
+        inter: disnake.ApplicationCommandInteraction,
+        from_unit: str = commands.Param(choices=["meter", "kilometer", "centimeter", "millimeter", "inch", "foot", "yard"], description="The length unit to convert from"),
+        to_unit: str = commands.Param(choices=["meter", "kilometer", "centimeter", "millimeter", "inch", "foot", "yard"], description="The length unit to convert to"),
+        value: float = commands.Param(description="Length value to convert"),
+    ):
+        await inter.response.defer()
+        try:
+            # Perform the conversion
+            quantity = value * ureg(from_unit)
+            converted_quantity = quantity.to(to_unit)
+
+            embed = disnake.Embed(
+                title="Length Conversion",
+                description=(
+                    f"**{value} {from_unit}** ➡ **{converted_quantity.magnitude:.2f} {to_unit}**"
+                ),
+                color=disnake.Color.green()
+            )
+            embed.set_footer(
+                text=f"Requested by {inter.user}",
+                icon_url=inter.user.avatar.url if inter.user.avatar else None,
+            )
+            await inter.send(embed=embed)
+
+        except Exception as e:
+            
+            embed = disnake.Embed(
+                title="Error",
+                description=f"An error occurred while converting units. {str(e)}",
                 color=disnake.Color.red()
             )
             await inter.send(embed=embed)
 
+    
+    @convert.sub_command(description="Convert between weight units.")
+    async def weight(
+        self,
+        inter: disnake.ApplicationCommandInteraction,
+        from_unit: str = commands.Param(choices=["kilogram", "gram", "pound", "ounce"], description="The weight unit to convert from"),
+        to_unit: str = commands.Param(choices=["kilogram", "gram", "pound", "ounce"], description="The weight unit to convert to"),
+        value: float = commands.Param(description="Weight value to convert"),
+    ):
+        await inter.response.defer()
+        try:
+            # Perform the conversion 
+            quantity = value * ureg(from_unit)
+            converted_quantity = quantity.to(to_unit)
 
-    @currency.error
-    async def currency_error(self, inter: disnake.ApplicationCommandInteraction, error):
-        embed = disnake.Embed(
-            title="Currency Conversion Error",
-            description=f"An error occurred: {error}",
-            color=disnake.Color.red()
-        )
-        await inter.send(embed=embed)
+            embed = disnake.Embed(
+                title="Weight Conversion",
+                description=(
+                    f"**{value} {from_unit}** ➡ **{converted_quantity.magnitude:.2f} {to_unit}**"
+                ),
+                color=disnake.Color.green()
+            )
+            embed.set_footer(
+                text=f"Requested by {inter.user}",
+                icon_url=inter.user.avatar.url if inter.user.avatar else None,
+            )
+            await inter.send(embed=embed)
+
+        except Exception as e:
+            
+            embed = disnake.Embed(
+                title="Error",
+                description=f"An error occurred while converting units. {str(e)}",
+                color=disnake.Color.red()
+            )
+            await inter.send(embed=embed)
+    @convert.sub_command(description="Convert between temperature units.")
+    async def temperature(
+        self,
+        inter: disnake.ApplicationCommandInteraction,
+        from_unit: str = commands.Param(choices=["celsius", "fahrenheit", "kelvin"], description="The temperature unit to convert from"),
+        to_unit: str = commands.Param(choices=["celsius", "fahrenheit", "kelvin"], description="The temperature unit to convert to"),
+        value: float = commands.Param(description="Temperature value to convert"),
+):
+        await inter.response.defer()
+        try:
+            # Perform the conversion using pint
+            quantity = Q_(value, ureg(from_unit))
+            if from_unit in ["celsius", "fahrenheit"] and to_unit in ["celsius", "fahrenheit"]:
+                converted_quantity = quantity.to(ureg(to_unit))
+            else:
+            # Convert between absolute scales for Kelvin
+                converted_quantity = quantity.to(ureg(to_unit))
+
+            # Create and send the embed
+            embed = disnake.Embed(
+                title="Temperature Conversion",
+                description=(
+                f"**{value} {from_unit.capitalize()}** ➡ **{converted_quantity.magnitude:.2f} {to_unit.capitalize()}**"
+            ),
+                color=disnake.Color.green()
+            )
+            embed.set_footer(
+                text=f"Requested by {inter.user}",
+                icon_url=inter.user.avatar.url if inter.user.avatar else None,
+            )
+            await inter.send(embed=embed)
+
+        except Exception as e:
+        # Handle errors
+            embed = disnake.Embed(
+                title="Error",
+                description=f"An error occurred while converting temperature. {str(e)}",
+                color=disnake.Color.red()
+            )
+            await inter.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Convert(bot))
