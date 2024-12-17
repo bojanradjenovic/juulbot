@@ -149,7 +149,7 @@ class Convert(commands.Cog):
 ):
         await inter.response.defer()
         try:
-            # Perform the conversion using pint
+            # Perform the conversion
             quantity = Q_(value, ureg(from_unit))
             if from_unit in ["celsius", "fahrenheit"] and to_unit in ["celsius", "fahrenheit"]:
                 converted_quantity = quantity.to(ureg(to_unit))
@@ -157,7 +157,6 @@ class Convert(commands.Cog):
             # Convert between absolute scales for Kelvin
                 converted_quantity = quantity.to(ureg(to_unit))
 
-            # Create and send the embed
             embed = disnake.Embed(
                 title="Temperature Conversion",
                 description=(

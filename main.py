@@ -22,5 +22,6 @@ async def on_ready():
 # Load extension
 bot.load_extension("commands.cat")
 bot.load_extension("commands.convert")
+bot.load_extension("commands.profile")
 # Run the bot
 bot.run(config['token'])

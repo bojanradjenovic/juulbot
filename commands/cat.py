@@ -6,7 +6,7 @@ class Cat(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.slash_command(description="Get a random cat picture!")
+    @commands.slash_command(description="Get a random cat picture.")
     async def cat(self, inter: disnake.ApplicationCommandInteraction):
         await inter.response.defer()
 
