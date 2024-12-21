@@ -15,7 +15,7 @@ class Profile(commands.Cog):
         # Default to the command user if no user is specified
         if user is None:
             user = inter.user
-
+        await inter.response.defer()
         try:
             embed = disnake.Embed(
                 title=f"{user.name}‘s Profile",
@@ -33,13 +33,14 @@ class Profile(commands.Cog):
                 icon_url=inter.user.avatar.url if inter.user.avatar else None
             )
 
-            await inter.send(embed=embed)
+            await inter.followup.send(embed=embed)
         except Exception as e:
-           embed = disnake.Embed(
+            embed = disnake.Embed(
                 title="Error",
                 description=f"An error occurred while fetching profile. {str(e)}",
                 color=disnake.Color.red()
             )
+            await inter.followup.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Profile(bot))

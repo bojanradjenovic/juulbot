@@ -1,3 +1,4 @@
 {
-    "token": "discord_bot_token"
+    "token": "discord_bot_token",
+    "game": "example game"
 }
