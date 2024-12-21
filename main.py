@@ -27,6 +27,7 @@ bot.load_extension("commands.profile")
 bot.load_extension("commands.ping")
 bot.load_extension("commands.reminder")
 bot.load_extension("commands.eightball")
-
+bot.load_extension("commands.weather")
+bot.load_extension("commands.avatar")
 # Run the bot
 bot.run(config['token'])

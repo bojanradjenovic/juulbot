@@ -27,6 +27,10 @@ class EightBall(commands.Cog):
                 description=f"**Answer:** {response}",
                 color=disnake.Color.blue()
             )
+        embed.set_footer(
+            text=f"Requested by {inter.author}",
+            icon_url=inter.author.avatar.url if inter.author.avatar else None,
+        )
         await inter.followup.send(embed=embed)
 def setup(bot):
     bot.add_cog(EightBall(bot))
