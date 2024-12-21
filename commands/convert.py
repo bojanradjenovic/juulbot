@@ -52,7 +52,7 @@ class Convert(commands.Cog):
                     f"Conversion Rate: **{Decimal(conversion_rate):.6f}**\n"
                     f"Rate Date: {fx_date}"
                 ),
-                color=disnake.Color.green()
+                color=disnake.Color.blue()
             )
             embed.set_footer(
                 text=f"Requested by {inter.user}",
@@ -86,7 +86,7 @@ class Convert(commands.Cog):
                 description=(
                     f"**{value} {from_unit}** ➡ **{converted_quantity.magnitude:.2f} {to_unit}**"
                 ),
-                color=disnake.Color.green()
+                color=disnake.Color.blue()
             )
             embed.set_footer(
                 text=f"Requested by {inter.user}",
@@ -123,7 +123,7 @@ class Convert(commands.Cog):
                 description=(
                     f"**{value} {from_unit}** ➡ **{converted_quantity.magnitude:.2f} {to_unit}**"
                 ),
-                color=disnake.Color.green()
+                color=disnake.Color.blue()
             )
             embed.set_footer(
                 text=f"Requested by {inter.user}",
@@ -162,7 +162,7 @@ class Convert(commands.Cog):
                 description=(
                 f"**{value} {from_unit.capitalize()}** ➡ **{converted_quantity.magnitude:.2f} {to_unit.capitalize()}**"
             ),
-                color=disnake.Color.green()
+                color=disnake.Color.blue()
             )
             embed.set_footer(
                 text=f"Requested by {inter.user}",

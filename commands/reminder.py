@@ -6,7 +6,7 @@ class Reminder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.slash_command(description="Set a reminder.", guild_ids=[715665314964046842])
+    @commands.slash_command(description="Set a reminder.")
     async def reminder(
         self,
         inter: disnake.ApplicationCommandInteraction,
