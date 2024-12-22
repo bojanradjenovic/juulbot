@@ -1,5 +1,7 @@
 {
     "token": "discord_bot_token",
+    "client_id": "discord_client_id",
     "game": "example game",
-    "openweathermap": "openweathermap_api_key"
+    "openweathermap": "openweathermap_api_key",
+    "rapidapi": "rapidapikey"
 }
