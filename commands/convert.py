@@ -20,8 +20,8 @@ class Convert(commands.Cog):
     async def currency(
         self,
         inter: disnake.ApplicationCommandInteraction,
-        from_currency: str = commands.Param(choices=["USD", "EUR", "GBP", "CAD", "DKK", "AED", "BGN", "RSD"], description="The currency to convert from"),
-        to_currency: str = commands.Param(choices=["USD", "EUR", "GBP", "CAD", "DKK", "AED", "BGN", "RSD"], description="The currency to convert to"),
+        from_currency: str = commands.Param(choices=["EUR", "USD", "GBP", "CAD", "DKK", "AED", "MAD", "BGN", "RSD", "INR", "IDR", "MYR", "CHF", "CNY", "JPY", "TRY", "RUB"], description="The currency to convert from"),
+        to_currency: str = commands.Param(choices=["EUR", "USD", "GBP", "CAD", "DKK", "AED", "MAD", "BGN", "RSD", "INR", "IDR", "MYR", "CHF", "CNY", "JPY", "TRY", "RUB"], description="The currency to convert to"),
         amount: float = commands.Param(description="Amount to convert"),
     ):
         await inter.response.defer()
