@@ -33,9 +33,11 @@ class Convert(commands.Cog):
             f"https://www.mastercard.co.uk/settlement/currencyrate/conversion-rate"
             f"?fxDate=0000-00-00&transCurr={from_currency}&crdhldBillCurr={to_currency}&bankFee=0&transAmt={rounded_amount}"
         )
-
+        headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0"
+        }
         try:
-            response = requests.get(api_url)
+            response = requests.get(api_url, headers=headers)
             response.raise_for_status()
 
             data = response.json()
