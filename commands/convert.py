@@ -20,8 +20,8 @@ class Convert(commands.Cog):
     async def currency(
         self,
         inter: disnake.ApplicationCommandInteraction,
-        from_currency: str = commands.Param(choices=["EUR", "USD", "GBP", "CAD", "DKK", "AED", "MAD", "BGN", "RSD", "INR", "IDR", "MYR", "CHF", "CNY", "JPY", "TRY", "RUB"], description="The currency to convert from"),
-        to_currency: str = commands.Param(choices=["EUR", "USD", "GBP", "CAD", "DKK", "AED", "MAD", "BGN", "RSD", "INR", "IDR", "MYR", "CHF", "CNY", "JPY", "TRY", "RUB"], description="The currency to convert to"),
+        from_currency: str = commands.Param(choices=["EUR", "USD", "GBP", "CAD", "DKK", "AED", "MAD", "BGN", "RSD", "INR", "IDR", "MYR", "CHF", "CNY", "JPY", "TRY", "RUB", "EGP", "PHP"], description="The currency to convert from"),
+        to_currency: str = commands.Param(choices=["EUR", "USD", "GBP", "CAD", "DKK", "AED", "MAD", "BGN", "RSD", "INR", "IDR", "MYR", "CHF", "CNY", "JPY", "TRY", "RUB", "EGP", "PHP"], description="The currency to convert to"),
         amount: float = commands.Param(description="Amount to convert"),
     ):
         await inter.response.defer()
@@ -156,7 +156,7 @@ class Convert(commands.Cog):
             if from_unit in ["celsius", "fahrenheit"] and to_unit in ["celsius", "fahrenheit"]:
                 converted_quantity = quantity.to(ureg(to_unit))
             else:
-            # Convert between absolute scales for Kelvin
+            
                 converted_quantity = quantity.to(ureg(to_unit))
 
             embed = disnake.Embed(
@@ -173,7 +173,7 @@ class Convert(commands.Cog):
             await inter.send(embed=embed)
 
         except Exception as e:
-        # Handle errors
+        
             embed = disnake.Embed(
                 title="Error",
                 description=f"An error occurred while converting temperature. {str(e)}",

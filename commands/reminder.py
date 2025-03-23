@@ -16,7 +16,6 @@ class Reminder(commands.Cog):
     ):
         await inter.response.defer()
         
-        # Confirmation message
         embed = disnake.Embed(
             title="Reminder Set! ⏰",
             description=f"Reminder set for {time}{unit} from now.",
@@ -28,7 +27,6 @@ class Reminder(commands.Cog):
         )
         await inter.followup.send(embed=embed)
 
-        # Convert time to seconds
         if unit == "m":
             time *= 60
         elif unit == "h":
@@ -36,7 +34,6 @@ class Reminder(commands.Cog):
         elif unit == "d":
             time *= 86400
 
-        # Wait for the specified time
         await asyncio.sleep(time)
 
         await inter.followup.send(f"⏰ {inter.author.mention}, Reminder: ``{reminder}``")
