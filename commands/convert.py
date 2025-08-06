@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 import requests
+from datetime import datetime
 from decimal import Decimal, ROUND_HALF_UP
 import pint
 from pint import UnitRegistry
@@ -29,21 +30,15 @@ class Convert(commands.Cog):
         cents = Decimal('0.01')
         rounded_amount = Decimal(amount).quantize(cents, ROUND_HALF_UP)
 
-        api_url = (
-            f"https://www.mastercard.co.uk/settlement/currencyrate/conversion-rate"
-            f"?fxDate=0000-00-00&transCurr={from_currency}&crdhldBillCurr={to_currency}&bankFee=0&transAmt={rounded_amount}"
-        )
-        headers = {
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0"
-        }
+        api_url = f"https://hexarate.paikama.co/api/rates/latest/{from_currency}?target={to_currency}"
         try:
-            response = requests.get(api_url, headers=headers)
+            response = requests.get(api_url)
             response.raise_for_status()
 
             data = response.json()
-            conversion_rate = data.get("data", {}).get("conversionRate")
-            converted_amount = data.get("data", {}).get("crdhldBillAmt")
-            fx_date = data.get("data", {}).get("fxDate")
+            conversion_rate = data.get("data", {}).get("mid")
+            converted_amount = amount * conversion_rate if conversion_rate is not None else None
+            fx_date = datetime.fromisoformat(data.get("data", {}).get("timestamp"))
             if conversion_rate is None or converted_amount is None:
                 raise ValueError("Missing data in API response")
 
@@ -52,7 +47,7 @@ class Convert(commands.Cog):
                 description=(
                     f"**{amount} {from_currency}** ➡ **{Decimal(converted_amount):.2f} {to_currency}**\n"
                     f"Conversion Rate: **{Decimal(conversion_rate):.6f}**\n"
-                    f"Rate Date: {fx_date}"
+                    f"Rate Date: **{str(fx_date.date())}**\n"
                 ),
                 color=disnake.Color.blue()
             )
