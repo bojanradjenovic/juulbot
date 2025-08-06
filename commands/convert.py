@@ -31,8 +31,11 @@ class Convert(commands.Cog):
         rounded_amount = Decimal(amount).quantize(cents, ROUND_HALF_UP)
 
         api_url = f"https://hexarate.paikama.co/api/rates/latest/{from_currency}?target={to_currency}"
+        headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0"
+        }
         try:
-            response = requests.get(api_url)
+            response = requests.get(api_url, headers=headers)
             response.raise_for_status()
 
             data = response.json()
